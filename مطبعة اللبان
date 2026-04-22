@@ -1,0 +1,27 @@
+
+import zipfile
+import os
+
+# Create ZIP file with all website files
+zip_path = '/mnt/agents/output/allaban-website.zip'
+
+files_to_include = [
+    '/mnt/agents/output/index.html',
+    '/mnt/agents/output/logo_header.png',
+    '/mnt/agents/output/logo_footer.png',
+    '/mnt/agents/output/logo_hero.png',
+    '/mnt/agents/output/favicon.png',
+    '/mnt/agents/output/logo_gold.png'
+]
+
+with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    for file_path in files_to_include:
+        if os.path.exists(file_path):
+            arcname = os.path.basename(file_path)
+            zipf.write(file_path, arcname)
+            print(f"✅ Added: {arcname}")
+        else:
+            print(f"⚠️ Missing: {file_path}")
+
+print(f"\n📦 ZIP file created: {zip_path}")
+print(f"📁 Size: {os.path.getsize(zip_path) / 1024:.1f} KB")
